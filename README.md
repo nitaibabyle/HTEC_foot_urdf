@@ -1,6 +1,6 @@
-HTEC foot is designed for humanoid robot, to absorbing the contact impace, also garantee the supporting stability.
+HTEC foot is designed for humanoid robots, aiming to absorbing the contact impace, also ensuring the supporting stability.
 
-We have designed the structure and selecting the optimal parameters, which can achieves balance between adabtablity and stability.
+We have designed the structure and configured the optimal parameters, which can enable the foot balance between adabtablity and stability.
 
 The foot have passive deformation capability to adapt to the ground.
 
