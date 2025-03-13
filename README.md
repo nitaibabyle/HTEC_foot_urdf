@@ -9,5 +9,4 @@ If you are interest about our foot, or if you are a humanoid robot enineer, who 
 HTEC performance in three types of terrain:
 |wave|lawn|noise|
 |---|---|---|
-|<img src="https://github.com/user-attachments/assets/f7361141-838a-45cf-a333-8e4768d20c29" width="200px" />|<img src="https://github.com/user-attachments/assets/a15c3983-53ae-4901-b816-fb3835865a71" width="200px" />|<img src="https://github.com/user-attachments/assets/c79468c3-a3b8-45e3-b749-75f76c017301" width="200px" />|
 |<img src="https://github.com/user-attachments/assets/96001566-d247-4be0-8cfb-e040ef644dfd" width="200px" />|<img src="https://github.com/user-attachments/assets/9b8cbca4-7cda-4441-8270-42d2ce5c577f" width="200px" />|<img src="https://github.com/user-attachments/assets/7cc49ae0-c488-46da-b793-371657c06ad4" width="200px" />|
