@@ -1,0 +1,255 @@
+<mujoco model="HTECfoot_urdf">
+
+    <compiler angle="radian" />
+    <size njmax="500" nconmax="100" />
+	 <default>
+        <default class="wall">
+        <geom type="plane" size="2.5 2.5 .02"/>
+        </default>
+    </default>
+
+    <asset>
+       
+		<mesh name="rmidfoot" file="footmeshes/rmidfoot.STL"/>
+		<mesh name="rmedial_forefoot" file="footmeshes/rmedial_forefoot.STL"/>
+		<mesh name="rmedial_toe" file="footmeshes/rmedial_toe.STL"/>
+		<mesh name="rlateral_forefoot" file="footmeshes/rlateral_forefoot.STL"/>
+		<mesh name="rlateral_toe" file="footmeshes/rlateral_toe.STL"/>
+		<mesh name="rhindfoot_linkage" file="footmeshes/rhindfoot_linkage.STL"/>
+		<mesh name="rmedial_tip" file="footmeshes/rmedial_tip.STL"/>
+		<mesh name="rlateral_tip" file="footmeshes/rlateral_tip.STL"/>
+		<mesh name="rhindfoot" file="footmeshes/rhindfoot.STL"/>
+		<mesh name="lmidfoot" file="footmeshes/lmidfoot.STL"/>
+		<mesh name="lmedial_forefoot" file="footmeshes/lmedial_forefoot.STL"/>
+		<mesh name="lmedial_toe" file="footmeshes/lmedial_toe.STL"/>
+		<mesh name="llateral_forefoot" file="footmeshes/llateral_forefoot.STL"/>
+		<mesh name="llateral_toe" file="footmeshes/llateral_toe.STL"/>
+		<mesh name="lhindfoot_linkage" file="footmeshes/lhindfoot_linkage.STL"/>
+		<mesh name="lmedial_tip" file="footmeshes/lmedial_tip.STL"/>
+		<mesh name="llateral_tip" file="footmeshes/llateral_tip.STL"/>
+		<mesh name="lhindfoot" file="footmeshes/lhindfoot.STL"/>
+		
+		<texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.15 0.2" width="512" height="512" mark="cross" markrgb=".8 .8 .8"/>
+        <material name="matplane" reflectance="0.3" texture="texplane" texrepeat="1 1" texuniform="true"/>
+
+    </asset>
+
+    <option timestep="0.001" iterations="50" tolerance="1e-10" solver="Newton" jacobian="dense" cone="pyramidal"/>
+
+    <visual>
+        <map force="0.1" zfar="30"/>
+        <rgba haze="0.15 0.25 0.35 1"/>
+        <quality shadowsize="2048"/>
+        <global offwidth="800" offheight="800"/>
+    </visual>
+
+    <worldbody>
+
+		<geom name="floor" pos="0 0 0" size="0 0 .25" type="plane" material="matplane" condim="3"/>
+		<light mode='trackcom' pos = '0.5 -1 3' dir = '-0.5 1 -3'/>
+		<light directional="true" diffuse=".2 .2 .2" specular="0.3 0.3 0.3" pos="0 0 5" dir="0 0 -1" castshadow="false"/>
+					<!-- 右脚 -->
+					<body name="rmidfoot" pos="0 -0.2 0.15">
+						<inertial pos="0.00548622703581159 -0.0224802741340409 -0.0517756910258012" quat="1 0 0 0" mass="0.344893442286448" diaginertia="0.000168712628407793 0.000214872573258469 0.000295424726620163"/>
+						<joint name="rfootpitch" pos="0 0 0" axis="0 -1 0" limited="true" range="-1.14 1.14" damping="2" armature = "0.1"/>
+						<geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="rmidfoot"/>
+						<body name="rmedial_forefoot" pos="0.0308443 -0.0045 -0.0765" quat="0.989221 0 0.146432 0" gravcomp="0">
+							<inertial pos="0.0467206 -0.000911764 1.15059e-06" quat="0.500846 0.500849 0.49915 0.499152" mass="0.0230717" diaginertia="2.89907e-05 2.85202e-05 9.66089e-07"/>
+							<joint name="rmedial_forefoot_pitch" pos="0 0 0" axis="0 1 0" stiffness="30" damping="2"/>
+							<geom type="mesh" rgba="0.666667 0.698039 0.768627 1" mesh="rmedial_forefoot"/>
+							<body name="rmedial_toe" pos="0.09 -0.001 0" quat="0.428239 0 0.903666 0" gravcomp="0">
+								<inertial pos="-0.00627798 0.000135053 0.00968161" quat="0.389669 0.588071 0.595135 0.384896" mass="0.0280988" diaginertia="3.1349e-06 2.94128e-06 2.49577e-06"/>
+								<!-- <joint name="rmedial_toe_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+								<geom name="rmedial_toe" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="rmedial_toe"/>
+								<site name="rmedial_tendon_point" pos ="0.00894 0 0.01327" size="0.005"/>
+								<body name="rmcontact" pos ="0.00894 0 0.01327" gravcomp="0">
+										<geom name="rmcontact" size="0.02" type="sphere"/>
+								</body>	
+								<body name="rmedial_tip" pos="-0.0179999 0 0" quat="0.482996 0 -0.875622 0" gravcomp="0">
+									<inertial pos="-0.00660517 -1.25819e-08 0.0033129" quat="0 0.830803 0 0.556567" mass="0.0104548" diaginertia="1.23144e-06 1.01123e-06 5.40388e-07"/>
+									<!-- <joint name="rmedial_tip_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+									<geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="rmedial_tip"/>
+								</body>
+							</body>
+						</body>
+						<body name="rlateral_forefoot" pos="0.0308443 -0.0385 -0.0765" quat="0 -0.97878 0 0.204914" gravcomp="0">
+							<inertial pos="0.0339767 0.000895145 4.08353e-07" quat="0.49869 0.49869 0.501307 0.501307" mass="0.0201339" diaginertia="1.45264e-05 1.41703e-05 8.21778e-07"/>
+							<joint name="rlateral_forefoot_pitch" pos="0 0 0" axis="0 -1 0" stiffness="30" damping="2"/>
+							<geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="rlateral_forefoot"/>
+							<body name="rlateral_toe" pos="0.065 0.001 0" quat="0 -0.481144 0 -0.876642" gravcomp="0">
+								<inertial pos="-0.00627798 0.000135053 0.00968161" quat="0.389669 0.588071 0.595135 0.384896" mass="0.0280988" diaginertia="3.1349e-06 2.94128e-06 2.49577e-06"/>
+								<!-- <joint name="rlateral_toe_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+								<geom name="rlateral_toe" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="rlateral_toe"/>
+								<site name="rlateral_tendon_point" pos ="0.00894 0 0.01327" size="0.005"/>
+								<body name="rlcontact" pos ="0.00894 0 0.01327" gravcomp="0">
+										<geom name="rlcontact" size="0.02" type="sphere"/>
+								</body>
+								<body name="rlateral_tip" pos="-0.0179999 0 0" quat="0.482996 0 -0.875622 0" gravcomp="0">
+									<inertial pos="-0.00660517 -1.25819e-08 0.0033129" quat="0 0.830803 0 0.556567" mass="0.0104548" diaginertia="1.23144e-06 1.01123e-06 5.40388e-07"/>
+									<!-- <joint name="rlateral_tip_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+									<geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="rlateral_tip"/>
+								</body>
+							</body>
+						</body>
+						<body name="rhindfoot_linkage" pos="-0.00915573 -0.0065 -0.0765" quat="0 -0.358368 0 0.93358" gravcomp="0">
+							<inertial pos="0.0160715 0.016 0" quat="0.499999 0.500001 0.499999 0.500001" mass="0.0279346" diaginertia="5.80477e-06 5.47652e-06 1.08597e-06"/>
+							<joint name="rhindfoot_pitch2" pos="0 0 0" axis="0 1 0" stiffness="50" damping="2"/>
+							<geom type="mesh" rgba="0.666667 0.698039 0.768627 1" mesh="rhindfoot_linkage"/>
+							<body name="rhindfoot" pos="0.03 0.022 0" quat="0 0 0 -1" gravcomp="0">
+								<inertial pos="-0.014591 0.00599687 -0.0012716" quat="0.680988 -0.190358 -0.190343 0.68102" mass="0.0266719" diaginertia="4.90064e-06 3.55012e-06 2.39906e-06"/>
+								<!-- <joint name="rhindfoot_pitch" pos="0 0 0" axis="0 -1 0" stiffness="50" damping="2"/> -->
+								<geom name="rhindfoot" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="rhindfoot"/>
+								<site name="rhindfoot_tendon_point" pos ="-0.0071 0.006 -0.02321" size="0.005"/>
+								<body name="rhcontact" pos ="-0.03 0.006 -0.00" gravcomp="0">
+										<geom name="rhcontact" size="0.02" type="sphere"/>
+								</body>
+							</body>
+						</body>
+					<site name = "site_rforcesensor" size = "0.01" pos = "-0.0000000 -0.029 0.00000000"/>
+				</body>
+		
+					<!-- 左脚 -->
+		            <body name="lmidfoot" pos="0 0.2 0.15">
+						<inertial pos="0.00548622705560291 0.0225197258333532 -0.0517756910420838" quat="1 0 0 0" mass="0.344893441773266" diaginertia="0.000168712628138027 0.000214872573219633 0.00029542472632935"/>
+						<joint name="lfootpitch" pos="0 0 0" axis="0 -1 0" limited="true" range="-1.14 1.14" damping="2" armature = "0.1"/>
+						<geom type="mesh" rgba="0.2 0.2 0.2 1" mesh="lmidfoot"/>
+						<body name="lmedial_forefoot" pos="0.0308443 0.0065 -0.0765" quat="0.989221 0 0.146432 0" gravcomp="0">
+							<inertial pos="0.0467206 -0.000911764 1.15059e-06" quat="0.500846 0.500849 0.49915 0.499152" mass="0.0230717" diaginertia="2.89907e-05 2.85202e-05 9.66089e-07"/>
+							<joint name="lmedial_forefoot_pitch" pos="0 0 0" axis="0 -1 0" stiffness="30" damping="1"/>
+							<geom type="mesh" rgba="0.666667 0.698039 0.768627 1" mesh="lmedial_forefoot"/>
+							<body name="lmedial_toe" pos="0.09 -0.001 0" quat="-0.428239 0 -0.903666 0" gravcomp="0">
+								<inertial pos="-0.00627798 0.000135053 0.00968161" quat="0.389669 0.588071 0.595135 0.384896" mass="0.0280988" diaginertia="3.1349e-06 2.94128e-06 2.49577e-06"/>
+								<!-- <joint name="lmedial_toe_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+								<geom name="lmedial_toe" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="lmedial_toe"/>
+								<site name="lmedial_tendon_point" pos ="0.00894 0 0.01327" size="0.005"/>
+								<body name="lmcontact" pos ="0.00894 0 0.01327" gravcomp="0">
+										<geom name="lmcontact" size="0.02" type="sphere"/>
+								</body>	
+								<body name="lmedial_tip" pos="-0.0179999 0 0" quat="0.482996 0 -0.875622 0" gravcomp="0">
+									<inertial pos="-0.00660517 -1.25819e-08 0.0033129" quat="0 0.830803 0 0.556567" mass="0.0104548" diaginertia="1.23144e-06 1.01123e-06 5.40388e-07"/>
+									<!-- <joint name="lmedial_tip_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+									<geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="lmedial_tip"/>
+								</body>
+							</body>
+						</body>
+						<body name="llateral_forefoot" pos="0.0308443 0.0405 -0.0765" quat="0.97878 0 0.204914 0" gravcomp="0">
+							<inertial pos="0.0339767 -0.000895145 -4.08353e-07" quat="0.501307 0.501307 0.49869 0.49869" mass="0.0201339" diaginertia="1.45264e-05 1.41703e-05 8.21778e-07"/>
+							<joint name="llateral_forefoot_pitch" pos="0 0 0" axis="0 -1 0" stiffness="30" damping="2"/>
+							<geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="llateral_forefoot"/>
+							<body name="llateral_toe" pos="0.065 -0.001 0" quat="0.481144 0 0.876642 0" gravcomp="0">
+								<inertial pos="-0.00627798 0.000135053 0.00968161" quat="0.389669 0.588071 0.595135 0.384896" mass="0.0280988" diaginertia="3.1349e-06 2.94128e-06 2.49577e-06"/>
+								<!-- <joint name="llateral_toe_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+								<geom name="llateral_toe" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="llateral_toe"/>
+								<site name="llateral_tendon_point" pos ="0.00894 0 0.01327" size="0.005"/>
+								<body name="llcontact" pos ="0.00894 0 0.01327" gravcomp="0">
+										<geom name="llcontact" size="0.02" type="sphere"/>
+								</body>	
+								<body name="llateral_tip" pos="-0.0179999 0 0" quat="0.482996 0 -0.875622 0" gravcomp="0">
+									<inertial pos="-0.00660517 -1.25819e-08 0.0033129" quat="0 0.830803 0 0.556567" mass="0.0104548" diaginertia="1.23144e-06 1.01123e-06 5.40388e-07"/>
+									<!-- <joint name="llateral_tip_pitch" pos="0 0 0" axis="0 -1 0" stiffness="1" damping="1"/> -->
+									<geom type="mesh" rgba="0.898039 0.917647 0.929412 1" mesh="llateral_tip"/>
+								</body>
+							</body>
+						</body>
+						<body name="lhindfoot_linkage" pos="-0.00915573 0.0385 -0.0765" quat="0 0.358368 0 -0.93358" gravcomp="0">
+							<inertial pos="0.0160715 0.016 0" quat="0.499999 0.500001 0.499999 0.500001" mass="0.0279346" diaginertia="5.80477e-06 5.47652e-06 1.08597e-06"/>
+							<joint name="lhindfoot_pitch2" pos="0 0 0" axis="0 1 0" stiffness="50" damping="2"/>
+							<geom type="mesh" rgba="0.666667 0.698039 0.768627 1" mesh="lhindfoot_linkage"/>
+							<body name="lhindfoot" pos="0.03 0.022 0" quat="0 0 0 -1" gravcomp="0">
+								<inertial pos="-0.014591 0.00599687 -0.0012716" quat="0.680988 -0.190358 -0.190343 0.68102" mass="0.0266719" diaginertia="4.90064e-06 3.55012e-06 2.39906e-06"/>
+								<!-- <joint name="lhindfoot_pitch" pos="0 0 0" axis="0 -1 0" stiffness="50" damping="2"/> -->
+								<geom name="lhindfoot" type="mesh" rgba="0.752941 0.752941 0.752941 1" mesh="lhindfoot"/>
+								<site name="lhindfoot_tendon_point" pos ="-0.0071 0.006 -0.02321" size="0.005"/>
+								<body name="lhcontact" pos ="-0.03 0.006 -0.00" gravcomp="0">
+										<geom name="lhcontact" size="0.02" type="sphere"/>
+								</body>	
+							</body>
+						</body>
+					<site name = "site_lforcesensor" size = "0.01" pos = "-0.0000000 0.029 0.00000000"/>
+				</body>
+    </worldbody>
+
+	<sensor>
+		<force name = "rforcesensor" site = "site_rforcesensor" cutoff = "2000.0"/>
+		<torque name = "rtorquesensor" site = "site_rforcesensor" cutoff = "2000.0"/>
+		<force name = "lforcesensor" site = "site_lforcesensor" cutoff = "2000.0"/>
+		<torque name = "ltorquesensor" site = "site_lforcesensor" cutoff = "2000.0"/>
+	</sensor>
+
+	<tendon>
+		</spatial>
+    	<spatial springlength="0.1392" width="0.002" stiffness="100" damping="5">
+     		<site site="rmedial_tendon_point"/>
+			<site site="rhindfoot_tendon_point"/>
+
+    	</spatial>
+    	<spatial springlength="0.11285" width="0.002" stiffness="100" damping="5">
+      		<site site="rlateral_tendon_point"/>
+      		<site site="rhindfoot_tendon_point"/>
+
+	  	</spatial>
+  		<spatial springlength="0.1392" width="0.002" stiffness="100" damping="5">
+     		<site site="lmedial_tendon_point"/>
+     		<site site="lhindfoot_tendon_point"/>
+
+    	</spatial>
+    	<spatial springlength="0.11285" width="0.002" stiffness="100" damping="5">
+      		<site site="llateral_tendon_point"/>
+      		<site site="lhindfoot_tendon_point"/>
+    	</spatial> 
+	</tendon>
+
+	<contact>
+		<exclude body1 = "rmidfoot" body2 = "rmedial_forefoot"/> 
+		<exclude body1 = "rmidfoot" body2 = "rlateral_forefoot"/>
+		<exclude body1 = "rmidfoot" body2 = "rhindfoot"/>
+		<exclude body1 = "rmidfoot" body2 = "rhindfoot_linkage"/>
+		<exclude body1 = "rmidfoot" body2 = "rmedial_toe"/>
+		<exclude body1 = "rmidfoot" body2 = "rmedial_tip"/>
+		<exclude body1 = "rmidfoot" body2 = "rlateral_toe"/>
+		<exclude body1 = "rmidfoot" body2 = "rlateral_tip"/>
+		<exclude body1 = "rmedial_forefoot" body2 = "rmedial_toe"/>
+		<exclude body1 = "rmedial_forefoot" body2 = "rmedial_tip"/>
+		<exclude body1 = "rmedial_forefoot" body2 = "rhindfoot"/>
+		<exclude body1 = "rmedial_forefoot" body2 = "rhindfoot_linkage"/>
+		<exclude body1 = "rlateral_forefoot" body2 = "rlateral_toe"/>
+		<exclude body1 = "rlateral_forefoot" body2 = "rlateral_tip"/>
+		<exclude body1 = "rlateral_forefoot" body2 = "rhindfoot"/>
+		<exclude body1 = "rlateral_forefoot" body2 = "rhindfoot_linkage"/>
+		<exclude body1 = "rlateral_forefoot" body2 = "rhindfoot_linkage"/>
+		<exclude body1 = "rhindfoot_linkage" body2 = "rhindfoot"/>
+		<exclude body1 = "rmedial_toe" body2 = "rmedial_tip"/>
+		<exclude body1 = "rlateral_toe" body2 = "rlateral_tip"/>
+	    <exclude body1 = "lmidfoot" body2 = "lmedial_forefoot"/> 
+		<exclude body1 = "lmidfoot" body2 = "llateral_forefoot"/>
+		<exclude body1 = "lmidfoot" body2 = "lhindfoot"/>
+		<exclude body1 = "lmidfoot" body2 = "lhindfoot_linkage"/>
+		<exclude body1 = "lmidfoot" body2 = "lmedial_toe"/>
+		<exclude body1 = "lmidfoot" body2 = "lmedial_tip"/>
+		<exclude body1 = "lmidfoot" body2 = "llateral_toe"/>
+		<exclude body1 = "lmidfoot" body2 = "llateral_tip"/>
+		<exclude body1 = "lmedial_forefoot" body2 = "lmedial_toe"/>
+		<exclude body1 = "lmedial_forefoot" body2 = "lmedial_tip"/>
+		<exclude body1 = "lmedial_forefoot" body2 = "lhindfoot"/>
+		<exclude body1 = "lmedial_forefoot" body2 = "lhindfoot_linkage"/>
+		<exclude body1 = "llateral_forefoot" body2 = "llateral_toe"/>
+		<exclude body1 = "llateral_forefoot" body2 = "llateral_tip"/>
+		<exclude body1 = "llateral_forefoot" body2 = "lhindfoot"/>
+		<exclude body1 = "llateral_forefoot" body2 = "lhindfoot_linkage"/>
+		<exclude body1 = "lhindfoot_linkage" body2 = "lhindfoot"/>
+		<exclude body1 = "rmedial_toe" body2 = "rmedial_tip"/>
+		<exclude body1 = "rlateral_toe" body2 = "rlateral_tip"/> 
+		<exclude body1 = "lmedial_toe" body2 = "lmedial_tip"/>
+		<exclude body1 = "llateral_toe" body2 = "llateral_tip"/> 
+		<exclude body1 = "rmedial_toe" body2 = "rlateral_toe"/>
+		<exclude body1 = "lmedial_toe" body2 = "llateral_toe"/> 
+		
+		<pair name="rfoot_fric4" geom1="rmcontact" geom2="floor" friction="1 1 0.01 0.01 0.01" solref="-5 -1500" solimp="0.9 0.99 0.02 0.5 2"/> 
+		<pair name="rfoot_fric5" geom1="rlcontact" geom2="floor" friction="1 1 0.01 0.01 0.01" solref="-5 -1500" solimp="0.9 0.99 0.02 0.5 2"/>
+		<pair name="rfoot_fric6" geom1="rhcontact" geom2="floor" friction="1 1 0.01 0.01 0.01" solref="-5 -1500" solimp="0.9 0.99 0.02 0.5 2"/>
+		<pair name="lfoot_fric4" geom1="rmcontact" geom2="floor" friction="1 1 0.01 0.01 0.01" solref="-5 -1500" solimp="0.9 0.99 0.02 0.5 2"/>
+		<pair name="lfoot_fric5" geom1="llcontact" geom2="floor" friction="1 1 0.01 0.01 0.01" solref="-5 -1500" solimp="0.9 0.99 0.02 0.5 2"/> 
+		<pair name="lfoot_fric6" geom1="lhcontact" geom2="floor" friction="1 1 0.01 0.01 0.01" solref="-5 -1500" solimp="0.9 0.99 0.02 0.5 2"/>
+	</contact>
+</mujoco>
+
